@@ -18,10 +18,10 @@ function Rutas() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const movilidadesResponse = await axios.get('http://127.0.0.1:8000/movilidad');
+        const movilidadesResponse = await axios.get('http://127.0.0.1:8000/api/movilidad');
         setMovilidades(movilidadesResponse.data);
 
-        const rutasResponse = await axios.get('http://127.0.0.1:8000/ruta');
+        const rutasResponse = await axios.get('http://127.0.0.1:8000/api/ruta');
         setRutas(rutasResponse.data);
       } catch (error) {
         console.error(error);
@@ -43,7 +43,7 @@ function Rutas() {
 
     try {
       if (editingId) {
-        await axios.put(`http://127.0.0.1:8000/ruta/${editingId}`, formData);
+        await axios.put(`http://127.0.0.1:8000/api/ruta/${editingId}/`, formData);
         const updatedRutas = rutas.map((ruta) => {
           if (ruta.movilidad_ruta_id === editingId) {
             return { ...ruta, ...formData };
@@ -53,7 +53,7 @@ function Rutas() {
         setRutas(updatedRutas);
         setEditingId(null);
       } else {
-        const response = await axios.post('http://127.0.0.1:8000/ruta', formData);
+        const response = await axios.post('http://127.0.0.1:8000/api/ruta/', formData);
         const newRuta = response.data;
         setRutas([...rutas, newRuta]);
       }
@@ -82,7 +82,7 @@ function Rutas() {
     if (confirmDelete) {
       try {
         // Realizar una solicitud DELETE para eliminar la ruta
-        await axios.delete(`http://127.0.0.1:8000/ruta/${id}`);
+        await axios.delete(`http://127.0.0.1:8000/api/ruta/${id}`);
         // Actualizar la lista de rutas después de la eliminación
         const updatedRutas = rutas.filter((ruta) => ruta.movilidad_ruta_id !== id);
         setRutas(updatedRutas);
